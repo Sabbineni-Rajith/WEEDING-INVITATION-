@@ -2,19 +2,19 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc, collection, getDocs, deleteDoc, onSnapshot, query, orderBy, getDocFromServer } from 'firebase/firestore';
 
-// Load configuration from environment variables with fallback to local config file
+// Load configuration from environment variables with hardcoded fallbacks
 // This ensures the app works both in AI Studio and when deployed to Vercel/Netlify
-import localConfig from '../firebase-applet-config.json';
+// even if the firebase-applet-config.json file is not committed to the repository.
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || localConfig.apiKey,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || localConfig.authDomain,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || localConfig.projectId,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || localConfig.storageBucket,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || localConfig.messagingSenderId,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || localConfig.appId,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || localConfig.measurementId,
-  firestoreDatabaseId: import.meta.env.VITE_FIREBASE_DATABASE_ID || localConfig.firestoreDatabaseId
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyCOYwtHiAA6UnUZSskHPajpyXsexQWDuzw",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "gen-lang-client-0091807776.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "gen-lang-client-0091807776",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "gen-lang-client-0091807776.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "354081876167",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:354081876167:web:be18c08068001891b6f6e2",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "",
+  firestoreDatabaseId: import.meta.env.VITE_FIREBASE_DATABASE_ID || "ai-studio-79b06c49-dd9f-498e-8696-26006e56bd92"
 };
 
 // Initialize Firebase SDK
