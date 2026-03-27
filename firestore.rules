@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ===============================================================
+    // Assumed Data Model
+    // ===============================================================
+    //
+    // Collection: settings
+    // Document ID: global
+    // Fields:
+    //   - groomName: string (required)
+    //   - groomLastName: string (optional)
+    //   - brideName: string (required)
+    //   - weddingDate: string (required)
+    //   - weddingTime: string (optional)
+    //   - weddingVenue: string (optional)
+    //   - weddingAddress: string (optional)
+    //   - mapUrl: string (optional)
+    //   - musicUrl: string (optional)
+    //
+    // Collection: gallery
+    // Document ID: auto-generated (timestamp)
+    // Fields:
+    //   - src: string (required)
+    //   - title: string (required)
+    //   - size: enum ["small", "wide", "large"] (required)
+    //   - order: number (required)
+    //   - id: string (required)
+    //
+    // ===============================================================
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+        (request.auth.token.email == "sabbinenirajith@gmail.com" && request.auth.token.email_verified == true);
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+    function isValidSettings(data) {
+      return hasRequiredFields(['groomName', 'brideName', 'weddingDate']) &&
+             data.groomName is string && data.groomName.size() > 0 && data.groomName.size() < 100 &&
+             data.brideName is string && data.brideName.size() > 0 && data.brideName.size() < 100 &&
+             data.weddingDate is string && data.weddingDate.size() > 0 && data.weddingDate.size() < 50;
+    }
+
+    function isValidGalleryImage(data) {
+      return hasRequiredFields(['src', 'title', 'size', 'order', 'id']) &&
+             data.src is string && data.src.size() > 0 && data.src.size() < 1000000 && // Allow base64
+             data.title is string && data.title.size() >= 0 && data.title.size() < 100 &&
+             data.size in ['small', 'wide', 'large'] &&
+             data.order is number &&
+             data.id is string;
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+    match /settings/global {
+      allow read: if true; // Publicly readable
+      allow write: if isAdmin() && isValidSettings(request.resource.data);
+    }
+
+    match /gallery/{imageId} {
+      allow read: if true; // Publicly readable
+      allow write: if isAdmin() && isValidGalleryImage(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}

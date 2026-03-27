@@ -1,0 +1,185 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@theme {
+  --font-serif: "Cormorant Garamond", serif;
+  --font-display: "Cinzel Decorative", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+:root {
+  --bg-dark: #050505;
+  --accent: #e2c28a;
+  --accent-bright: #ffffff;
+  --rose-gold: #e5b1b1;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: #f8fafc;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+/* Noise Texture Overlay */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Moving Gradient Background */
+.gradient-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #050505 100%);
+  animation: gradient-move 20s infinite alternate ease-in-out;
+}
+
+@keyframes gradient-move {
+  0% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.1) translate(2%, 2%); }
+  100% { transform: scale(1) translate(-1%, -1%); }
+}
+
+/* Particle Field Background */
+.particle-field {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, #0d0d0d 0%, #050505 100%);
+}
+
+.particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  filter: blur(1px);
+  box-shadow: 0 0 10px var(--accent);
+  animation: float-particle var(--duration) infinite ease-in-out;
+}
+
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.2; }
+  50% { transform: translateY(-20px) translateX(10px); opacity: 0.8; }
+}
+
+/* Glassmorphism */
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+}
+
+/* Glowing Button */
+.glow-button {
+  position: relative;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: 12px 32px;
+  border-radius: 9999px;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.glow-button:hover {
+  background: var(--accent);
+  color: black;
+  box-shadow: 0 0 30px rgba(226, 194, 138, 0.4);
+}
+
+/* Animated Border */
+.animated-border {
+  position: relative;
+}
+
+.animated-border::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.animated-border:hover::after {
+  width: 100%;
+}
+
+/* Premium Gradient Text */
+.premium-text {
+  background: linear-gradient(
+    to bottom,
+    #ffffff 0%,
+    #f3e5ab 20%,
+    #e2c28a 40%,
+    #c5a059 60%,
+    #8a6d3b 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 20px rgba(197, 160, 89, 0.2));
+  letter-spacing: -0.02em;
+}
+
+/* Star Pulse */
+.star-pulse {
+  animation: star-pulse 4s infinite ease-in-out;
+}
+
+@keyframes star-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.2; }
+  50% { transform: scale(1.2); opacity: 0.8; filter: drop-shadow(0 0 10px var(--accent)); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Lightbox styles */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
