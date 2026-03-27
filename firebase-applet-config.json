@@ -1,8 +1,10 @@
-node_modules/
-build/
-dist/
-coverage/
-.DS_Store
-*.log
-.env*
-!.env.example
+{
+  "projectId": "gen-lang-client-0091807776",
+  "appId": "1:354081876167:web:be18c08068001891b6f6e2",
+  "apiKey": "AIzaSyCOYwtHiAA6UnUZSskHPajpyXsexQWDuzw",
+  "authDomain": "gen-lang-client-0091807776.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-79b06c49-dd9f-498e-8696-26006e56bd92",
+  "storageBucket": "gen-lang-client-0091807776.firebasestorage.app",
+  "messagingSenderId": "354081876167",
+  "measurementId": ""
+}
